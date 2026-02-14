@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import path from "path";
 import { env } from "./config/env.js";
 import { mealsRouter } from "./routes/meals.routes.js";
 import { ordersRouter } from "./routes/orders.routes.js";
@@ -31,6 +32,8 @@ export function createApp() {
   app.use("/api/meals", mealsRouter);
   app.use("/api/orders", ordersRouter);
   app.use("/api/payments", paymentRouter);
+
+  app.use("/images", express.static(path.resolve("server/public")));
 
   app.use(notFound);
   app.use(errorHandler);

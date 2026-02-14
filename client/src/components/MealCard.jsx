@@ -10,32 +10,36 @@ import { addToCart } from "../utils/cart";
  * pass an `image` prop or adjust the src below accordingly.
  */
 export default function MealCard({ meal }) {
-  const { _id, name, category, price } = meal;
+  const { _id, name, category, price, imageUrl } = meal;
 
-  // Build a dynamic image URL from Unsplash. The dimensions control
-  // the aspect ratio and ensure consistent sizing. Note: unsplash
-  // delivers random images for the same query; caching may vary.
-  const imgSrc = `https://source.unsplash.com/400x250/?${encodeURIComponent(
-    name || category,
-  )}`;
+  /*
+   * Determine the correct image source for the meal.
+   *
+   * When the backend provides a local imageUrl (e.g. "/images/smoky_jollof_rice.jpg"),
+   * prefix it with the API base URL so that the client requests the image from the
+   * backend server. If no imageUrl exists, fall back to Unsplash using a dynamic
+   * search based on the meal name or category.
+   */
+  const imgSrc = imageUrl
+    ? `${import.meta.env.VITE_API_BASE_URL}${imageUrl}`
+    : `https://source.unsplash.com/400x250/?${encodeURIComponent(name || category)}`;
 
   return (
     <div className="card">
       <div className="media">
+        {/* Use the computed src and include a lazy loading hint */}
         <img src={imgSrc} alt={name} className="thumb" loading="lazy" />
       </div>
       <h3>{name}</h3>
       <p className="small">{category}</p>
       <div className="row" style={{ marginTop: 8 }}>
-          <div className="price">₦{price.toLocaleString("en-NG")}</div>
-          <button
-            className="btn primary"
-            onClick={() =>
-              addToCart({ mealId: _id, name, price: Number(price) })
-            }
-          >
-            Add to cart
-          </button>
+        <div className="price">₦{price.toLocaleString("en-NG")}</div>
+        <button
+          className="btn primary"
+          onClick={() => addToCart({ mealId: _id, name, price: Number(price) })}
+        >
+          Add to cart
+        </button>
       </div>
     </div>
   );

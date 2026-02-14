@@ -15,11 +15,35 @@
 
 *{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; }
+
+/*
+ * Layout adjustments
+ *
+ * Turn the body into a flex container so the footer can stick to the bottom of
+ * the viewport on pages with little content. The root element and each
+ * <main> section are set to flex to fill available space, ensuring that the
+ * footer sits at the bottom without floating awkwardly in the middle of the page.
+ */
 body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.55;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Allow the React root element to expand and flex its children vertically */
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make each page's main section take up remaining vertical space */
+main {
+  flex: 1;
 }
 a{ color: inherit; text-decoration:none; }
 img{ max-width:100%; display:block; }
@@ -229,12 +253,19 @@ textarea{ min-height: 120px; resize: vertical; }
 }
 .table th{ color: var(--text); font-weight: 800; }
 
+/*
+ * Footer styling
+ *
+ * Use margin-top:auto so the footer automatically sticks to the bottom of the
+ * flex container defined on the body. The border and padding provide visual
+ * separation from the page content.
+ */
 .footer{
   border-top: 1px solid var(--line);
   padding: 24px 0;
   color: var(--muted);
   font-size: 13px;
-  margin-top: 64px;
+  margin-top: auto;
 }
 
 .notice{
