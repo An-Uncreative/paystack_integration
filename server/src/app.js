@@ -7,9 +7,12 @@ import { mealsRouter } from "./routes/meals.routes.js";
 import { ordersRouter } from "./routes/orders.routes.js";
 import { paymentRouter } from "./routes/payment.routes.js";
 import { notFound, errorHandler } from "./middleware/error.js";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 export function createApp() {
   const app = express();
+  const __dirname = dirname(fileURLToPath(import.meta.url));
 
   app.use(helmet());
   app.use(cors({ origin: env.clientOrigin, credentials: true }));
@@ -33,7 +36,14 @@ export function createApp() {
   app.use("/api/orders", ordersRouter);
   app.use("/api/payments", paymentRouter);
 
-  app.use("/images", express.static(path.resolve("server/public")));
+  app.use(
+    "/images",
+    express.static(path.join(__dirname, "../public/images"), {
+      setHeaders: (res) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+      },
+    }),
+  );
 
   app.use(notFound);
   app.use(errorHandler);
