@@ -3,7 +3,7 @@ import { created } from "../utils/respond.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { Order } from "../models/order.js";
-import { Meal } from "../models/Meal.js";
+import { Meal } from "../models/meal.js";
 
 function computeTotals(items) {
   const subtotal = items.reduce((sum, it) => sum + it.price * it.qty, 0);
