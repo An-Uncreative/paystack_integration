@@ -23,6 +23,17 @@ The system demonstrates:
 
 This project was built to simulate a real-world restaurant ordering workflow with proper architectural and security considerations.
 
+## Problem
+
+lagos bites is a small restaurant rely on manual order collection through WhatsApp or phone calls. This leads to:
+
+- Order miscommunication
+- Manual payment confirmation
+- No centralized tracking
+- Poor user experience
+
+Lagos Bites website provides a structured ordering system with secure online payments and server-side verification to eliminate these issues.
+
 ## Core Features
 ### Customer Experience
 
